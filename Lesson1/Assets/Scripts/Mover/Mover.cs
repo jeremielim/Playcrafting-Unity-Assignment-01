@@ -40,8 +40,6 @@ public class Mover : MonoBehaviour
             newVelocity = rb.velocity + direction * aerialAcceleration * Time.deltaTime;
         }
 
-        Debug.Log(newVelocity);
-
         newVelocity.x = Mathf.Clamp( newVelocity.x, -maximumSpeed, maximumSpeed );
         rb.velocity = newVelocity;
     }
