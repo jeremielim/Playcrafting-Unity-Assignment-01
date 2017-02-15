@@ -52,7 +52,7 @@ public class GameGUI : MonoBehaviour
 
     public bool DidWinGame()
     {
-        return !DidLoseGame() && player.GetComponent<PickupGetter>().FindPickupCount( "gem" ) >= 3;
+        return !DidLoseGame() && player.GetComponent<PickupGetter>().FindPickupCount( "gem" ) >= 5;
     }
 
     public void RestartGame()
