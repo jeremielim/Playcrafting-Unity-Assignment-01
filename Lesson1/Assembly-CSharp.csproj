@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Mover\PatrolController.cs" />
      <Compile Include="Assets\Scripts\Mover\PatrolJumpController.cs" />
      <Compile Include="Assets\Scripts\Mover\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Mover\Projectile.cs" />
      <Compile Include="Assets\Scripts\Pickup\Pickup.cs" />
      <Compile Include="Assets\Scripts\Pickup\PickupDamager.cs" />
      <Compile Include="Assets\Scripts\Pickup\PickupGetter.cs" />

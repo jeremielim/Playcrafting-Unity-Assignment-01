@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 //this is a controller that listens to keyboard input to move a Mover around.
 public class PlayerController : MonoBehaviour

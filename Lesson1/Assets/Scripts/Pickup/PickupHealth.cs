@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-//this is a Pickup that rewards health when picked up.
+﻿//this is a Pickup that rewards health when picked up.
 public class PickupHealth : Pickup
 {
     public float recoveryAmount = 1.0f;
