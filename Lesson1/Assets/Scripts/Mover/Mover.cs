@@ -50,8 +50,6 @@ public class Mover : MonoBehaviour
             }
         }
 
-
-        Debug.Log(direction);
         //GetComponent<type>() will give you the component of the given type that is attached to this same object
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         Vector3 newVelocity = rb.velocity + direction * acceleration * Time.deltaTime;

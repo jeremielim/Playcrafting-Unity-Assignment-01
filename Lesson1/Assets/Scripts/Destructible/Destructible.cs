@@ -34,6 +34,7 @@ public class Destructible : MonoBehaviour
     public virtual void TakeDamage( float amount )
     {
         ModifyHitPoints( -amount );
+        Debug.Log("Hurt");
     }
 
     public virtual void RecoverHitPoints( float amount )

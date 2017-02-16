@@ -18,13 +18,13 @@ https://docs.unity3d.com/
 ✔ Add a new enemy type, and create a Controller script for it that causes it to jump periodically.
  - Hint: it’s a lot like the PatrolController, but simple since it doesn’t have to change direction. All it has to do is call Jump() on the Mover.
 
-- Make a Pickup that damages you when you get it.
+✔  Make a Pickup that damages you when you get it.
   - Hint: You shouldn’t need to write any new code to do this.
 
 - Make a Pickup that causes you to jump higher.
   - Hint: When the Pickup is grabbed, it can increase the jumpImpulse of the Mover attached to the PickupGetter.
 
-- Make it so that the player and the snake SpriteRenderers set flipX to true when they’re moving in the other direction.
+✔ Make it so that the player and the snake SpriteRenderers set flipX to true when they’re moving in the other direction.
   - Hint: GetComponent<SpriteRenderer>().flipX = true
   - Hint: “Moving in the other direction” means “has a negative X velocity.”
 
