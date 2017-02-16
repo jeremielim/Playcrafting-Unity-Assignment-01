@@ -28,7 +28,7 @@ https://docs.unity3d.com/
   - Hint: GetComponent<SpriteRenderer>().flipX = true
   - Hint: “Moving in the other direction” means “has a negative X velocity.”
 
-- Create a new script called ProjectileShooter that shoots projectiles periodically. Attach it to a new enemy type that shoots out projectiles that cause damage.
+✔  Create a new script called ProjectileShooter that shoots projectiles periodically. Attach it to a new enemy type that shoots out projectiles that cause damage.
   - Hint: Instantiate<>() is what you should use to create projectiles.
   - Hint: You will need a prefab that you will instantiate. Take a look at SpriteTiledArea for an example. You will need to position the new projectile after creating it.
   - Hint: Give the projectile a Destructor to make it cause damage, or make it similar to the damaging Pickup you created earlier.
