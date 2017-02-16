@@ -25,7 +25,6 @@ public class PatrolController : MonoBehaviour
         movementDirection = 1.0f;
     }
 
-
     public void Update()
     {
         remainingPatrolTime -= Time.deltaTime;

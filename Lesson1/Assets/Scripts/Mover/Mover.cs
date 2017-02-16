@@ -6,7 +6,9 @@ public class Mover : MonoBehaviour
     [Tooltip ("How much we accelerate over time on the ground. the higher it is, the fast we gain speed.")]
     public float acceleration = 50.0f;
     public float aerialAcceleration = 1.0f;
-    public float caclAcceleration;
+    private float calcAcceleration;
+
+    public bool isFacingRight = true;
     
     [Tooltip ("How much force we apply when we jump into the air. the higher it is, the higher we jump.")]
     public float jumpImpulse = 10.0f;
@@ -31,9 +33,28 @@ public class Mover : MonoBehaviour
     //aerialAcceleration values, depending on if we're in the air or not.
     public void AccelerateInDirection(Vector2 direction)
     {
+        //calcAcceleration = acceleration;
+
+        if(direction.x == 1) {
+            if(isFacingRight) {
+                GetComponentInChildren<SpriteRenderer>().flipX = false;
+            } else {
+                GetComponentInChildren<SpriteRenderer>().flipX = true;
+            }
+            
+        } else if(direction.x == -1) {
+            if(isFacingRight) {
+                GetComponentInChildren<SpriteRenderer>().flipX = true;
+            } else {
+                GetComponentInChildren<SpriteRenderer>().flipX = false;
+            }
+        }
+
+
+        Debug.Log(direction);
         //GetComponent<type>() will give you the component of the given type that is attached to this same object
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        Vector3 newVelocity = rb.velocity + direction * caclAcceleration * Time.deltaTime;
+        Vector3 newVelocity = rb.velocity + direction * acceleration * Time.deltaTime;
         newVelocity.x = Mathf.Clamp( newVelocity.x, -maximumSpeed, maximumSpeed );
         rb.velocity = newVelocity;
     }
@@ -63,7 +84,7 @@ public class Mover : MonoBehaviour
         if ( collision.collider.gameObject.layer == 8 )
         {
             isOnGround = true;
-            caclAcceleration = acceleration;
+            calcAcceleration = acceleration;
         }
     }
     
@@ -74,7 +95,7 @@ public class Mover : MonoBehaviour
         if ( collision.collider.gameObject.layer == 8 )
         {
             isOnGround = false;
-            caclAcceleration = aerialAcceleration;
+            calcAcceleration = aerialAcceleration;
         }
     }
 
