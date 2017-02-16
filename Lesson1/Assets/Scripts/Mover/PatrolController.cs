@@ -30,6 +30,8 @@ public class PatrolController : MonoBehaviour
     {
         remainingPatrolTime -= Time.deltaTime;
 
+        controlledMover.AccelerateInDirection( new Vector2( movementDirection, 0.0f ) );
+
         //there's still patrol time left, so accelerate in our patrol direction
         if ( remainingPatrolTime > 0.0f )
         {
@@ -38,7 +40,7 @@ public class PatrolController : MonoBehaviour
         //we're out of patrol time, so if we've come to rest by now, reverse direction and continue
         else if ( !controlledMover.IsWalking() )
         {
-            movementDirection *= -1;
+            movementDirection *= -1.0f;
 
             remainingPatrolTime = patrolTime;
         }

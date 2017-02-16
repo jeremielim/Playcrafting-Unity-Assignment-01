@@ -6,6 +6,7 @@ public class Mover : MonoBehaviour
     [Tooltip ("How much we accelerate over time on the ground. the higher it is, the fast we gain speed.")]
     public float acceleration = 50.0f;
     public float aerialAcceleration = 1.0f;
+    public float caclAcceleration;
     
     [Tooltip ("How much force we apply when we jump into the air. the higher it is, the higher we jump.")]
     public float jumpImpulse = 10.0f;
@@ -32,14 +33,7 @@ public class Mover : MonoBehaviour
     {
         //GetComponent<type>() will give you the component of the given type that is attached to this same object
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        Vector3 newVelocity;
-
-        if(isOnGround) {
-            newVelocity = rb.velocity + direction * acceleration * Time.deltaTime;
-        } else {
-            newVelocity = rb.velocity + direction * aerialAcceleration * Time.deltaTime;
-        }
-
+        Vector3 newVelocity = rb.velocity + direction * caclAcceleration * Time.deltaTime;
         newVelocity.x = Mathf.Clamp( newVelocity.x, -maximumSpeed, maximumSpeed );
         rb.velocity = newVelocity;
     }
@@ -69,6 +63,7 @@ public class Mover : MonoBehaviour
         if ( collision.collider.gameObject.layer == 8 )
         {
             isOnGround = true;
+            caclAcceleration = acceleration;
         }
     }
     
@@ -79,6 +74,7 @@ public class Mover : MonoBehaviour
         if ( collision.collider.gameObject.layer == 8 )
         {
             isOnGround = false;
+            caclAcceleration = aerialAcceleration;
         }
     }
 

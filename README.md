@@ -15,7 +15,7 @@ https://docs.unity3d.com/
 
 ✔ Create a second PhysicsMaterial to make another terrain type that is more slippery, and a third that is super sticky.
 
-- Add a new enemy type, and create a Controller script for it that causes it to jump periodically.
+✔ Add a new enemy type, and create a Controller script for it that causes it to jump periodically.
  - Hint: it’s a lot like the PatrolController, but simple since it doesn’t have to change direction. All it has to do is call Jump() on the Mover.
 
 - Make a Pickup that damages you when you get it.
