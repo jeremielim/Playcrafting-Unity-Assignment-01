@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Pickup\PickupDamager.cs" />
      <Compile Include="Assets\Scripts\Pickup\PickupGetter.cs" />
      <Compile Include="Assets\Scripts\Pickup\PickupHealth.cs" />
+     <Compile Include="Assets\Scripts\Pickup\PickupJumper.cs" />
      <Compile Include="Assets\Scripts\Utility\SpriteTiledArea.cs" />
      <None Include="Assets\Sprites\whereToGetSprites.txt" />
  <Reference Include="UnityEngine.UI">

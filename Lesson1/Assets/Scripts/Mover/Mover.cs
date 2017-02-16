@@ -27,14 +27,13 @@ public class Mover : MonoBehaviour
     public void Start()
     {
         isOnGround = false;
+        calcAcceleration = acceleration;
     }
     
     //this tells our Rigidbody to accelerate in a given direction, using our acceleration or
     //aerialAcceleration values, depending on if we're in the air or not.
     public void AccelerateInDirection(Vector2 direction)
-    {
-        //calcAcceleration = acceleration;
-
+    {   
         if(direction.x == 1) {
             if(isFacingRight) {
                 GetComponentInChildren<SpriteRenderer>().flipX = false;
@@ -52,7 +51,7 @@ public class Mover : MonoBehaviour
 
         //GetComponent<type>() will give you the component of the given type that is attached to this same object
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        Vector3 newVelocity = rb.velocity + direction * acceleration * Time.deltaTime;
+        Vector3 newVelocity = rb.velocity + direction * calcAcceleration * Time.deltaTime;
         newVelocity.x = Mathf.Clamp( newVelocity.x, -maximumSpeed, maximumSpeed );
         rb.velocity = newVelocity;
     }
@@ -82,8 +81,18 @@ public class Mover : MonoBehaviour
         if ( collision.collider.gameObject.layer == 8 )
         {
             isOnGround = true;
+            
             calcAcceleration = acceleration;
         }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if ( collision.collider.gameObject.layer == 8 )
+        {
+            calcAcceleration = acceleration;
+        }
+    
     }
     
     //Unity will automatically call this on a MonoBehaviour on the frame that a collision ends
@@ -93,6 +102,7 @@ public class Mover : MonoBehaviour
         if ( collision.collider.gameObject.layer == 8 )
         {
             isOnGround = false;
+            
             calcAcceleration = aerialAcceleration;
         }
     }

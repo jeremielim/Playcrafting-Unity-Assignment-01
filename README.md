@@ -21,7 +21,7 @@ https://docs.unity3d.com/
 ✔  Make a Pickup that damages you when you get it.
   - Hint: You shouldn’t need to write any new code to do this.
 
-- Make a Pickup that causes you to jump higher.
+✔ Make a Pickup that causes you to jump higher.
   - Hint: When the Pickup is grabbed, it can increase the jumpImpulse of the Mover attached to the PickupGetter.
 
 ✔ Make it so that the player and the snake SpriteRenderers set flipX to true when they’re moving in the other direction.

@@ -6,6 +6,6 @@ public class PatrolJumpController : MonoBehaviour {
 
     public void Update()
     {
-		controlledMover.Jump();
+        controlledMover.Jump();
     }
 }
