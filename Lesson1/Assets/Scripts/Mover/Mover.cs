@@ -1,26 +1,17 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 //a PhysicsMover is just like a Mover except it uses Unity's built-in physics to move
 public class Mover : MonoBehaviour
 {
-    [Tooltip ("How much we accelerate over time on the ground. the higher it is, the fast we gain speed.")]
     public float acceleration = 50.0f;
     public float aerialAcceleration = 1.0f;
-    private float calcAcceleration;
-
     public bool isFacingRight = true;
-    
-    [Tooltip ("How much force we apply when we jump into the air. the higher it is, the higher we jump.")]
     public float jumpImpulse = 10.0f;
-    
-    [Tooltip ("How fast we can go at the very maximum.")]
     public float maximumSpeed = 20.0f;
-
-    [Tooltip ("When our X velocity is lower than this, we are standing. This is mostly for aesthetic reasons like animations.")]
     public float minimumWalkSpeed = 0.1f;
-
-    //we need to track whether we're on the ground or not to allow jumping. a "bool" is a boolean
-    //value - true or false. So this will either be yes or no to whether we are on the ground.
+    private float calcAcceleration;
+    private List<string> collisionList = new List<string>();
     private bool isOnGround;
 
     //we need to initialize isOnGround to be false, since we start in the air.
@@ -30,10 +21,17 @@ public class Mover : MonoBehaviour
         calcAcceleration = acceleration;
     }
     
-    //this tells our Rigidbody to accelerate in a given direction, using our acceleration or
-    //aerialAcceleration values, depending on if we're in the air or not.
     public void AccelerateInDirection(Vector2 direction)
     {   
+        //this tells our Rigidbody to accelerate in a given direction, using our acceleration or
+        //aerialAcceleration values, depending on if we're in the air or not.
+
+        if ( isOnGround ) {
+            calcAcceleration = acceleration;
+        } else {
+            calcAcceleration = aerialAcceleration;
+        }
+
         if(direction.x == 1) {
             if(isFacingRight) {
                 GetComponentInChildren<SpriteRenderer>().flipX = false;
@@ -49,9 +47,11 @@ public class Mover : MonoBehaviour
             }
         }
 
-        //GetComponent<type>() will give you the component of the given type that is attached to this same object
+        print ( "Am I on the ground? " + isOnGround );
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         Vector3 newVelocity = rb.velocity + direction * calcAcceleration * Time.deltaTime;
+        
         newVelocity.x = Mathf.Clamp( newVelocity.x, -maximumSpeed, maximumSpeed );
         rb.velocity = newVelocity;
     }
@@ -59,18 +59,13 @@ public class Mover : MonoBehaviour
     //applies a single burst of velocity upwards - jump!
     public void Jump()
     {
-        //only apply the velocity if we're currently standing on the ground
         if ( isOnGround )
         {
             GetComponent<Rigidbody2D>().velocity += new Vector2( 0.0f, jumpImpulse );
-
-            //since we've just jumped, we're no longer on the ground
             isOnGround = false;
         }
     }
     
-    //Unity will automatically call this on a MonoBehaviour on the frame that a collision starts
-    //between 2 colliders. note that occasionally this doesn't get called - thanks Unity!
     public void OnCollisionEnter2D(Collision2D collision)
     {
         //we collided, so that means we're on the ground
@@ -78,32 +73,46 @@ public class Mover : MonoBehaviour
         //jumped... maybe you'd fix that by checking collision.normal?
         //this also doesn't work well when we collide with multiple objects, and can fully break.
         //how might we handle multiple collisions? Maybe a list?
+        
         if ( collision.collider.gameObject.layer == 8 )
         {
             isOnGround = true;
-            
-            calcAcceleration = acceleration;
         }
+
+        // Fix our collision bug – store a list of stuff we’re colliding instead of isOnGround.
+        // We’re considered on the ground if we’re colliding with anything at all. 
+        // Add to the list when collision starts, remove from the list when it ends.
+;
+
+        collisionList.Add(collision.collider.name);
+        
+        print ( collisionList.Count );
+
+
     }
 
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if ( collision.collider.gameObject.layer == 8 )
-        {
-            calcAcceleration = acceleration;
-        }
-    
-    }
-    
-    //Unity will automatically call this on a MonoBehaviour on the frame that a collision ends
+    // void OnCollisionStay2D(Collision2D collision)
+    // {
+    // //    foreach (ContactPoint2D contact in collision.contacts) {
+    // //         print(contact.collider.name + " hit " + contact.otherCollider.name);
+    // //         Debug.DrawRay(contact.point, contact.normal, Color.white);
+    // //     }
+    //     Collider2D collider = collision.collider;
+    //     Vector3 contactPoint = collision.contacts[0].point;
+        
+
+    //     //print ( "Colliding with " + collider + " at location " + contactPoint );
+    // }
+
     public void OnCollisionExit2D(Collision2D collision)
     {
-        //we're not colliding anymore, so we're no longer standing on the ground
+        collisionList.Remove(collision.collider.name);
+        print ( collisionList.Count );
+
+   
         if ( collision.collider.gameObject.layer == 8 )
         {
-            isOnGround = false;
-            
-            calcAcceleration = aerialAcceleration;
+            // isOnGround = false;
         }
     }
 
