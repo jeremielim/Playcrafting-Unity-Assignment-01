@@ -22,75 +22,88 @@ public class Mover : MonoBehaviour
         isOnGround = false;
         calcAcceleration = acceleration;
     }
-    
-    public void AccelerateInDirection(Vector2 direction)
-    {   
-        //this tells our Rigidbody to accelerate in a given direction, using our acceleration or
-        //aerialAcceleration values, depending on if we're in the air or not.
 
-        if ( isOnGround ) {
+    public void AccelerateInDirection(Vector2 direction)
+    {
+        if (isOnGround)
+        {
             calcAcceleration = acceleration;
-        } else {
-            if( hasHitSide ) {
-                calcAcceleration = 0;
-            } else {
+        }
+        else
+        {
+            if (hasHitSide)
+            {
+                calcAcceleration = aerialAcceleration / 2;
+            }
+            else
+            {
                 calcAcceleration = aerialAcceleration;
             }
-            
+
         }
 
-        if(direction.x == 1) {
-            if(isFacingRight) {
+        if (direction.x == 1)
+        {
+            if (isFacingRight)
+            {
                 GetComponentInChildren<SpriteRenderer>().flipX = false;
-            } else {
+            }
+            else
+            {
                 GetComponentInChildren<SpriteRenderer>().flipX = true;
             }
-            
-        } else if(direction.x == -1) {
-            if(isFacingRight) {
+        }
+        else if (direction.x == -1)
+        {
+            if (isFacingRight)
+            {
                 GetComponentInChildren<SpriteRenderer>().flipX = true;
-            } else {
+            }
+            else
+            {
                 GetComponentInChildren<SpriteRenderer>().flipX = false;
             }
         }
-
-        
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         Vector3 newVelocity = rb.velocity + direction * calcAcceleration * Time.deltaTime;
-        
-        newVelocity.x = Mathf.Clamp( newVelocity.x, -maximumSpeed, maximumSpeed );
+
+        newVelocity.x = Mathf.Clamp(newVelocity.x, -maximumSpeed, maximumSpeed);
         rb.velocity = newVelocity;
     }
-    
+
     //applies a single burst of velocity upwards - jump!
     public void Jump()
     {
-        if ( isOnGround )
+        if (isOnGround)
         {
-            GetComponent<Rigidbody2D>().velocity += new Vector2( 0.0f, jumpImpulse );
+            GetComponent<Rigidbody2D>().velocity += new Vector2(0.0f, jumpImpulse);
             isOnGround = false;
         }
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        Collider2D collider = collision.collider;    
-        Vector3 contactPoint = collision.contacts[0].normal; 
+        Collider2D collider = collision.collider;
+        Vector3 contactPoint = collision.contacts[0].normal;
 
-        if (collision.collider.gameObject.layer == 8) {
-            
+        if (collision.collider.gameObject.layer == 8)
+        {
+
             collisionObjects.Add(collision.collider.name);
-            
-            if (contactPoint.y > 0 && collisionObjects.Count > 0) {
+
+            if (contactPoint.y > 0 && collisionObjects.Count > 0)
+            {
                 isOnGround = true;
             }
         }
 
-        if (contactPoint.x < 0 ) {
+        if (contactPoint.x < 0)
+        {
             hasHitSide = true;
-            print ( "Did I hit the side? " + hasHitSide );
-        } else {
+        }
+        else
+        {
             hasHitSide = false;
         }
     }
@@ -99,13 +112,14 @@ public class Mover : MonoBehaviour
     {
         collisionObjects.Remove(collision.collider.name);
 
-        if(collisionObjects.Count == 0) {
+        if (collisionObjects.Count == 0)
+        {
             isOnGround = false;
         }
     }
 
     public bool IsWalking()
     {
-        return Mathf.Abs( GetComponent<Rigidbody2D>().velocity.x ) >= minimumWalkSpeed;
+        return Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) >= minimumWalkSpeed;
     }
 }

@@ -7,10 +7,10 @@
 //How could we make it smarter to walks to edges? Maybe a raycast?
 public class PatrolController : MonoBehaviour
 {
-    [Tooltip ("The Mover we will control.")]
+    [Tooltip("The Mover we will control.")]
     public Mover controlledMover;
 
-    [Tooltip ("How long we will patrol in each direction before turning around.")]
+    [Tooltip("How long we will patrol in each direction before turning around.")]
     public float patrolTime = 1.0f;
 
     //how much time we have left before we need to turn around
@@ -29,15 +29,15 @@ public class PatrolController : MonoBehaviour
     {
         remainingPatrolTime -= Time.deltaTime;
 
-        controlledMover.AccelerateInDirection( new Vector2( movementDirection, 0.0f ) );
+        controlledMover.AccelerateInDirection(new Vector2(movementDirection, 0.0f));
 
         //there's still patrol time left, so accelerate in our patrol direction
-        if ( remainingPatrolTime > 0.0f )
+        if (remainingPatrolTime > 0.0f)
         {
-            controlledMover.AccelerateInDirection( new Vector2( movementDirection, 0.0f ) );
+            controlledMover.AccelerateInDirection(new Vector2(movementDirection, 0.0f));
         }
         //we're out of patrol time, so if we've come to rest by now, reverse direction and continue
-        else if ( !controlledMover.IsWalking() )
+        else if (!controlledMover.IsWalking())
         {
             movementDirection *= -1.0f;
 
