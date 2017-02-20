@@ -9,33 +9,27 @@ public class PickupGetter : MonoBehaviour
     //we'll keep track of every Pickup we've gotten, unless they're consumable
     protected List<Pickup> pickups;
 
+    private int count = 0;
+
     public virtual void Awake()
     {
         pickups = new List<Pickup>();
     }
 
-    public virtual void PickUp( Pickup pickup )
+    public virtual void PickUp(Pickup pickup)
     {
-        if ( !pickup.isConsumable )
+        if (!pickup.isConsumable)
         {
-            pickups.Add( pickup );
+            pickups.Add(pickup);
         }
     }
 
-    //this is a very poor way of writing this function. Imagine if we had 10,000
-    //items we had picked up – we would have to go through every single one each
-    //and every time. Instead, we would be better served storing the count as it
-    //changes, and just accessing with we have stored.
-    public virtual int FindPickupCount( string pickupId )
+    public virtual int FindPickupCount(string pickupId)
     {
-        int count = 0;
 
-        for ( int pickupIndex = 0; pickupIndex < pickups.Count; pickupIndex++ )
+        if (pickups[0].id == pickupId)
         {
-            if ( pickups[ pickupIndex ].id == pickupId )
-            {
-                count++;
-            }
+            count++;
         }
 
         return count;

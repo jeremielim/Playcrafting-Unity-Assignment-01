@@ -15,6 +15,7 @@ public class Mover : MonoBehaviour
     private bool isOnGround;
     private bool hasHitSide;
     private Animator animator;
+    private Vector3 contactPoint;
 
     //we need to initialize isOnGround to be false, since we start in the air.
     public void Start()
@@ -27,10 +28,11 @@ public class Mover : MonoBehaviour
     public void Update()
     {
         //if we have an Animator, tell it how to animate
-        if ( animator != null )
+        if ( animator != null && gameObject.name == "BirdHero")
         {
             //tell the animator if we're walking or not
             animator.SetBool( "walking", IsWalking() );
+            print ( gameObject.name );
         }
     }
 
@@ -86,6 +88,8 @@ public class Mover : MonoBehaviour
     //applies a single burst of velocity upwards - jump!
     public void Jump()
     {
+        // EnvironmentSink.isSinking = true;
+
         if (isOnGround)
         {
             GetComponent<Rigidbody2D>().velocity += new Vector2(0.0f, jumpImpulse);
@@ -93,7 +97,7 @@ public class Mover : MonoBehaviour
         }
 
         //tell our animator to play a jump animation
-        if ( animator != null )
+        if ( animator != null && gameObject.name == "BirdHero" )
         {
             animator.SetBool( "jumping", true );
         }
@@ -102,7 +106,7 @@ public class Mover : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Collider2D collider = collision.collider;
-        Vector3 contactPoint = collision.contacts[0].normal;
+        contactPoint = collision.contacts[0].normal;
 
         if (collision.collider.gameObject.layer == 8)
         {
@@ -133,7 +137,7 @@ public class Mover : MonoBehaviour
     {
         collisionObjects.Remove(collision.collider.name);
 
-        if (collisionObjects.Count == 0)
+        if (collisionObjects.Count == 0 && contactPoint.y > 0)
         {
             isOnGround = false;
 

@@ -11,7 +11,7 @@ public class GameGUI : MonoBehaviour
     public Image[] healthImages;
 
     [HideInInspector]
-    public float lifeCount;
+    public float lifeCount = 3.0f;
 
     public Image[] gemImages;
     [HideInInspector]
@@ -59,6 +59,8 @@ public class GameGUI : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene( "MainGame" );
+        CamerShaker.isShaking = false;
+        EnvironmentSink.isSinking = false;
     }
 
     public void UpdateHealthImages()
@@ -67,7 +69,6 @@ public class GameGUI : MonoBehaviour
         if ( player != null )
         {
             lifeCount = player.hitPoints;
-            print ( lifeCount );
         }
 
         for ( int healthImageIndex = 0; healthImageIndex < healthImages.Length; healthImageIndex++ )

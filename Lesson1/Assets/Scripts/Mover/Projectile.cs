@@ -8,9 +8,12 @@ public class Projectile : MonoBehaviour {
 
     public float projectileVelocity = 1.0f;
 
+    public float projectileTimeInterval = 3.0f;
+    public float projectileStartTime = 1.0f;
+
     void Start()
     {
-        InvokeRepeating("LaunchProjectile", 1.0f, 1.5f);
+        InvokeRepeating("LaunchProjectile", projectileStartTime, projectileTimeInterval);
     }
 
     void LaunchProjectile() {

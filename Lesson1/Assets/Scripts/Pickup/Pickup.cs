@@ -68,10 +68,17 @@ public class Pickup : MonoBehaviour
 
     public virtual void OnTriggerEnter2D( Collider2D other )
     {
+        
 
         if ( other.name == GameGUI.instance.player.name && GetComponent<Pickup>().id == "gem" ) {
             GameGUI.instance.gemCount++;
             GameGUI.instance.UpdateGemImages();
+
+            if(GameGUI.instance.gemCount > 0) {
+                EnvironmentSink.isSinking = true;
+                CamerShaker.isShaking = true;
+            }
+            
         } 
         
         if (other.name == GameGUI.instance.player.name && GetComponent<Pickup>().id == "heart") {
