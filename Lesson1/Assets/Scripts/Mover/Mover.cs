@@ -13,14 +13,25 @@ public class Mover : MonoBehaviour
     private float calcAcceleration;
     private List<string> collisionObjects = new List<string>();
     private bool isOnGround;
-
     private bool hasHitSide;
+    private Animator animator;
 
     //we need to initialize isOnGround to be false, since we start in the air.
     public void Start()
     {
         isOnGround = false;
         calcAcceleration = acceleration;
+        animator = GetComponent<Animator>();
+    }
+
+    public void Update()
+    {
+        //if we have an Animator, tell it how to animate
+        if ( animator != null )
+        {
+            //tell the animator if we're walking or not
+            animator.SetBool( "walking", IsWalking() );
+        }
     }
 
     public void AccelerateInDirection(Vector2 direction)
@@ -80,6 +91,12 @@ public class Mover : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity += new Vector2(0.0f, jumpImpulse);
             isOnGround = false;
         }
+
+        //tell our animator to play a jump animation
+        if ( animator != null )
+        {
+            animator.SetBool( "jumping", true );
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -89,12 +106,16 @@ public class Mover : MonoBehaviour
 
         if (collision.collider.gameObject.layer == 8)
         {
-
             collisionObjects.Add(collision.collider.name);
 
             if (contactPoint.y > 0 && collisionObjects.Count > 0)
             {
                 isOnGround = true;
+
+                if ( animator != null )
+                {
+                    animator.SetBool( "jumping", false );
+                }
             }
         }
 
@@ -115,6 +136,11 @@ public class Mover : MonoBehaviour
         if (collisionObjects.Count == 0)
         {
             isOnGround = false;
+
+            if ( animator != null )
+            {
+                animator.SetBool( "jumping", true );
+            }
         }
     }
 

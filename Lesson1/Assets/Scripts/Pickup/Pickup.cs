@@ -68,9 +68,20 @@ public class Pickup : MonoBehaviour
 
     public virtual void OnTriggerEnter2D( Collider2D other )
     {
+
+        if ( other.name == GameGUI.instance.player.name && GetComponent<Pickup>().id == "gem" ) {
+            GameGUI.instance.gemCount++;
+            GameGUI.instance.UpdateGemImages();
+        } 
+        
+        if (other.name == GameGUI.instance.player.name && GetComponent<Pickup>().id == "heart") {
+            GameGUI.instance.lifeCount++;
+            GameGUI.instance.UpdateHealthImages();
+        }
+
         DoCollision( other );
     }
-    public virtual void OnTriggerStay2D( Collider2D other )
+    public virtual void onTriggerStay2D( Collider2D other )
     {
         DoCollision( other );
     }

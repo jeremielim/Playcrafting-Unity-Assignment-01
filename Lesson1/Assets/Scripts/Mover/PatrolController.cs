@@ -19,6 +19,9 @@ public class PatrolController : MonoBehaviour
     //the current X direction we're moving: either 1 or -1.
     private float movementDirection;
 
+    [SerializeField] private Transform startOfSight, endOfSight;
+    [SerializeField] private bool hasSeenEdge = false;
+
     public void Start()
     {
         remainingPatrolTime = patrolTime;
@@ -27,6 +30,8 @@ public class PatrolController : MonoBehaviour
 
     public void Update()
     {
+        Raycasting();
+
         remainingPatrolTime -= Time.deltaTime;
 
         controlledMover.AccelerateInDirection(new Vector2(movementDirection, 0.0f));
@@ -42,6 +47,16 @@ public class PatrolController : MonoBehaviour
             movementDirection *= -1.0f;
 
             remainingPatrolTime = patrolTime;
+        }
+    }
+
+    void Raycasting()
+    {
+        Debug.DrawLine(startOfSight.position, endOfSight.position, Color.red);
+        hasSeenEdge = Physics2D.Linecast(startOfSight.position, endOfSight.position, 1 << LayerMask.NameToLayer("Platform"));
+
+        if(hasSeenEdge) {
+            print ( "turn around" );
         }
     }
 }

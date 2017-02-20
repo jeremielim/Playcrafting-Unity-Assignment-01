@@ -2,6 +2,7 @@
 public class PickupHealth : Pickup
 {
     public float recoveryAmount = 1.0f;
+    
 
     public override void PickUp( PickupGetter getter )
     {

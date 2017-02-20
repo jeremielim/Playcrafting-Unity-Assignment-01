@@ -51,6 +51,8 @@ public class Destructible : MonoBehaviour
 
         hitPoints += amount;
         hitPoints = Mathf.Min( hitPoints, maximumHitPoints );
+
+        GameGUI.instance.UpdateHealthImages();
         
         if ( hitPoints <= 0.0f )
         {

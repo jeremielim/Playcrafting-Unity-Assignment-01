@@ -46,10 +46,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Camera\CamerShaker.cs" />
      <Compile Include="Assets\Scripts\Camera\FollowCam.cs" />
-     <Compile Include="Assets\Scripts\Camera\GameGUI.cs" />
      <Compile Include="Assets\Scripts\Destructible\Destructible.cs" />
      <Compile Include="Assets\Scripts\Destructible\Destructor.cs" />
+     <Compile Include="Assets\Scripts\GameManager\GameGUI.cs" />
      <Compile Include="Assets\Scripts\Mover\Mover.cs" />
      <Compile Include="Assets\Scripts\Mover\PatrolController.cs" />
      <Compile Include="Assets\Scripts\Mover\PatrolJumpController.cs" />
